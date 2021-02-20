@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+onready var HUD = get_node("/root/Game/HUD")
 export var speed = 7
 
 
@@ -9,7 +10,7 @@ func _physics_process(delta):
 		$Laser.fire(Vector2(global_position.x, 0))
 	elif not Input.is_action_pressed("shoot") and $Laser.is_casting:
 		$Laser.stop()
-	
+   
 
 
 func get_input():
@@ -21,5 +22,7 @@ func get_input():
 	return input_dir.rotated(rotation)
 
 
+
 func _on_Damage_body_entered(body):
+	HUD.update_health(-body.damage)
 	body.die()
